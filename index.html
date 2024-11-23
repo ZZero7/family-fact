@@ -3,93 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun Space Facts</title>
+    <title>Fun Family Facts</title>
     <style>
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+       
         :root {
-            --background-color: #f0f8ff;
-            --text-color: #333;
-            --button-bg-color: #007bff;
-            --button-text-color: #fff;
-            --container-bg-color: #fff;
-            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --primary-color: #4a90e2;
+            --secondary-color: #45b7af;
+            --background-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --text-color: #2c3e50;
+            --heading-color: #34495e;
+            --button-bg-color: #4a90e2;
+            --button-hover-bg: #357abd;
+            --container-bg-color: rgba(255, 255, 255, 0.95);
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+            --border-radius: 16px;
+        }
+
+      
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+                --text-color: #ecf0f1;
+                --heading-color: #ffffff;
+                --container-bg-color: rgba(52, 73, 94, 0.95);
+                --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background-color: var(--background-color);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--background-gradient);
             color: var(--text-color);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+            line-height: 1.6;
+            transition: all var(--transition-speed) ease;
         }
 
         .fact-container {
-            text-align: center;
-            max-width: 600px;
-            padding: 20px;
-            border-radius: 8px;
+            width: 100%;
+            max-width: 700px;
+            padding: 40px;
             background-color: var(--container-bg-color);
+            border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            transition: box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .fact-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: var(--heading-color);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        #fact {
+            font-size: 1.25rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.1);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: opacity var(--transition-speed) ease;
         }
 
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
             background-color: var(--button-bg-color);
-            color: var(--button-text-color);
-            transition: background-color 0.3s, transform 0.3s;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            font-weight: 600;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
         }
 
         button:hover {
-            background-color: darken(var(--button-bg-color), 10%);
-            transform: scale(1.05);
+            background-color: var(--button-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
         }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --background-color: #333;
-                --text-color: #f0f8ff;
-                --container-bg-color: #444;
-                --button-bg-color: #0056b3;
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        
+        @media (max-width: 768px) {
+            .fact-container {
+                padding: 25px;
             }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            #fact {
+                font-size: 1.1rem;
+                padding: 1rem;
+            }
+
+            button {
+                padding: 0.8rem 1.6rem;
+                font-size: 1rem;
+            }
+        }
+
+        
+        @keyframes fadein {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadein 0.5s ease;
         }
     </style>
 </head>
 <body>
     <div class="fact-container">
-        <h1>Fun Space Fact</h1>
+        <h1>Fun Family Facts</h1>
         <p id="fact"></p>
         <button onclick="showRandomFact()">Show Another Fact</button>
     </div>
-
     <script>
-        const spaceFacts = [
-            "Space is Completely Silent: Unlike Earth, space has no atmosphere, which means sound has no medium or way to travel to be heard.",
-            "The Hottest Planet is Not the Closest to the Sun: Venus is the hottest planet in our solar system with surface temperatures over 450 degrees Celsius, even though Mercury is closer to the Sun.",
-            "A Day on Venus is Longer Than a Year: Venus has an extremely slow rotation on its axis, taking about 243 Earth days to complete one rotation, while it takes only about 225 Earth days to orbit the Sun.",
-            "There are More Stars in the Universe Than Grains of Sand on Earth: The universe is vast, with billions of galaxies, each containing millions or billions of stars.",
-            "Neutron Stars Can Spin at a Rate of 600 Rotations Per Second: These incredibly dense remnants of supernova explosions can rotate extremely rapidly.",
-            "There May Be a Planet Made of Diamonds: 55 Cancri e, a planet twice the size of Earth, is thought to have a surface made largely of diamond.",
-            "The Largest Known Volcano is on Mars: Olympus Mons is about 13.6 miles high, making it nearly three times the height of Mount Everest.",
-            "Space is Not Far Away: The Kármán line, which is the boundary of space, is only 100 kilometers (62 miles) above sea level.",
-            "The Moon is Moving Away from Earth: Each year, the Moon drifts about 3.8 centimeters further away from our planet.",
-            "A Year on Mercury is Just 88 Days Long: Due to its proximity to the Sun, Mercury has a very short orbital period."
+        const familyFacts = [
+            "The average family size in the U.S. is 3.14 people.",
+            "Families often have unique traditions that are passed down through generations.",
+            "The word 'family' comes from the Latin word 'familia', which means household.",
+            "Family reunions are a popular way for extended families to gather and celebrate.",
+            "In many cultures, family is considered the most important social unit.",
+            "Family meals are linked to better dietary habits and stronger family bonds.",
+            "The concept of family varies greatly across different cultures and societies.",
+            "Family members often share similar traits and characteristics.",
+            "Family support is crucial for personal development and well-being.",
+            "Family history can provide insights into health and genetic conditions."
         ];
 
         function showRandomFact() {
-            const randomIndex = Math.floor(Math.random() * spaceFacts.length);
-            document.getElementById('fact').innerText = spaceFacts[randomIndex];
+            const factElement = document.getElementById('fact');
+            factElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * familyFacts.length);
+                factElement.innerText = familyFacts[randomIndex];
+                factElement.style.opacity = '1';
+                factElement.classList.remove('fade-in');
+                void factElement.offsetWidth; 
+                factElement.classList.add('fade-in');
+            }, 300);
         }
 
-        // Show a fact when the page loads
+        
         showRandomFact();
     </script>
 </body>
